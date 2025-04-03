@@ -232,6 +232,13 @@
                           v-else
                           src="@/assets/icons/line-break.svg"
                       /></span>
+                      <div
+                        v-text="
+                          (element as NoteElement).scaleNotes
+                            .map((note) => note.toString())
+                            .join('-')
+                        "
+                      ></div>
                       <SyllableNeumeBox
                         class="syllable-box"
                         :note="element"
