@@ -159,7 +159,7 @@ export class AnalysisService {
   }
 
   private static handleNote(
-    noteElement: Readonly<NoteElement>,
+    noteElement: NoteElement,
     workspace: AnalysisWorkspace,
   ) {
     workspace.currentNote += getNeumeValue(noteElement.quantitativeNeume)!;
@@ -171,7 +171,7 @@ export class AnalysisService {
     // Create the note atom nodes for each note atom in the spread, but do not
     // append them to the node list until we determine how they should be
     // interleaved with other nodes.
-    const noteAtomNodes = currentNotes.map((x, index) => {
+    noteElement.noteAtomNodes = currentNotes.map((x, index) => {
       const noteAtomNode: NoteAtomNode = new NoteAtomNode();
       noteAtomNode.elementIndex = noteElement.index;
       noteAtomNode.physicalNote = getScaleNoteFromValue(x);
@@ -196,33 +196,33 @@ export class AnalysisService {
       case QuantitativeNeume.OligonPlusKentemataPlusHypsiliLeft:
       case QuantitativeNeume.OligonPlusKentemataPlusHypsiliRight:
       case QuantitativeNeume.OligonPlusKentemata:
-        this.handleKentemataCombo(noteElement, noteAtomNodes, workspace);
+        this.handleKentemataCombo(noteElement, noteElement.noteAtomNodes, workspace);
         break;
       case QuantitativeNeume.KentemataPlusOligon:
-        this.handleKentemataOligon(noteElement, noteAtomNodes, workspace);
+        this.handleKentemataOligon(noteElement, noteElement.noteAtomNodes, workspace);
         break;
       case QuantitativeNeume.Hyporoe:
       case QuantitativeNeume.PetastiPlusHyporoe:
       case QuantitativeNeume.OligonPlusHyporoe:
-        this.handleHyporoe(noteElement, noteAtomNodes, workspace);
+        this.handleHyporoe(noteElement, noteElement.noteAtomNodes, workspace);
         break;
       case QuantitativeNeume.DoubleApostrophos:
       case QuantitativeNeume.IsonPlusApostrophos:
-        this.handleApostrophosCombo(noteElement, noteAtomNodes, workspace);
+        this.handleApostrophosCombo(noteElement, noteElement.noteAtomNodes, workspace);
         break;
       case QuantitativeNeume.RunningElaphron:
       case QuantitativeNeume.PetastiPlusRunningElaphron:
-        this.handleRunningElaphron(noteElement, noteAtomNodes, workspace);
+        this.handleRunningElaphron(noteElement, noteElement.noteAtomNodes, workspace);
         break;
       case QuantitativeNeume.OligonPlusRunningElaphronPlusKentemata:
         this.handleRunningElaphronKentemata(
           noteElement,
-          noteAtomNodes,
+          noteElement.noteAtomNodes,
           workspace,
         );
         break;
       case QuantitativeNeume.OligonPlusHyporoePlusKentemata:
-        this.handleHyporoeKentemata(noteElement, noteAtomNodes, workspace);
+        this.handleHyporoeKentemata(noteElement, noteElement.noteAtomNodes, workspace);
         break;
       case QuantitativeNeume.Breath:
       case QuantitativeNeume.Cross:
@@ -233,7 +233,7 @@ export class AnalysisService {
         this.handleRest(noteElement, workspace);
         break;
       default:
-        this.handleDefault(noteElement, noteAtomNodes, workspace);
+        this.handleDefault(noteElement, noteElement.noteAtomNodes, workspace);
         break;
     }
   }

@@ -46,6 +46,7 @@ import { Score } from '@/models/Score';
 import { NeumeMappingService } from '@/services/NeumeMappingService';
 import { TATWEEL } from '@/utils/constants';
 
+import { AnalysisService } from './audio/AnalysisService';
 import { MelismaHelperGreek, MelismaSyllables } from './MelismaHelperGreek';
 import { TextMeasurementService } from './TextMeasurementService';
 
@@ -2098,6 +2099,11 @@ export class LayoutService {
 
         note.scaleNotesVirtual = noteSpread.map((x) =>
           getScaleNoteFromValue(currentNoteVirtual + x),
+        );
+
+        AnalysisService.analyze(
+          elements,
+          pageSetup.chrysanthineAccidentals,
         );
 
         // Handle fthora carries

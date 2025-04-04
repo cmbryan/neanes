@@ -14,13 +14,15 @@
       />
 
       <!-- Notes -->
-      <template v-for="(note, index) in scaleNotes" :key="`note-${index}`">
-        <circle
-          :cx="noteX(index)"
-          :cy="noteY(note)"
-          :r="noteRadius"
-          fill="black"
-        />
+      <template v-for="(noteAtomNode, index) in noteAtomNodes" :key="`note-${index}`">
+        <g :transform="`translate(${noteX(index)}, ${noteY(noteAtomNode.physicalNote)})`">
+          <circle
+            :r="noteRadius"
+            fill="black"
+          />
+          <path v-if="noteDur(noteAtomNode.duration).stem" :d="noteDur(noteAtomNode.duration).stem" stroke="black" stroke-width="1" fill="none"/>
+          <path v-if="noteDur(noteAtomNode.duration).flag" :d="noteDur(noteAtomNode.duration).flag" stroke="black" stroke-width="1" fill="black"/>
+        </g>
       </template>
     </svg>
   </div>
@@ -31,10 +33,11 @@ import { Component, Prop, Vue, Watch } from 'vue-facing-decorator';
 
 import { PageSetup } from '@/models/PageSetup';
 import { ScaleNote } from '@/models/Scales';
+import { NoteAtomNode } from '@/services/audio/AnalysisService';
 
 @Component
 export default class ScaleNotesStaff extends Vue {
-  @Prop({ required: true }) scaleNotes!: ScaleNote[];
+  @Prop({ required: true }) noteAtomNodes!: NoteAtomNode[];
   @Prop({ required: true }) pageSetup!: PageSetup;
 
   lineWidth = 1;
@@ -52,14 +55,15 @@ export default class ScaleNotesStaff extends Vue {
     this.updateWidth();
   }
 
-  @Watch('scaleNotes')
+  @Watch('noteAtomNodes')
   onScaleNotesChanged() {
     this.updateWidth();
   }
 
   updateWidth() {
     // Calculate width based on the number of notes
-    this.width = Math.max(80, this.scaleNotes.length * 15);
+    this.width = Math.max(80, this.noteAtomNodes.length * 15);
+    this.width = 80;
   }
 
   lineY(line: number) {
@@ -125,6 +129,34 @@ export default class ScaleNotesStaff extends Vue {
         return this.positionY(0);
       default:
         return this.positionY(0);
+    }
+  }
+
+  noteDur(duration: number) {
+    const stemLength = 10;
+    const flagWidth = 4;
+    const flagHeight = 6;
+    const stemX = this.noteRadius;
+    const stemY = 0;
+    const flagX = stemX;
+    const flagY = -stemLength;
+
+    switch (duration) {
+      case 1:
+        return {
+          stem: `M ${stemX}, ${stemY} v -${stemLength}`,
+          flag: null,
+        };
+      case 0.5:
+        return {
+          stem: `M ${stemX}, ${stemY} v -${stemLength}`,
+          flag: `M ${flagX}, ${flagY} l ${flagWidth}, ${flagHeight} v -${flagHeight}`,
+        };
+      default:
+        return {
+          stem: null,
+          flag: null,
+        };
     }
   }
 }
