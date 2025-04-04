@@ -239,6 +239,12 @@
                             .join('-')
                         "
                       ></div>
+                      <div class="scale-notes-staff">
+                        <ScaleNotesStaff
+                          :scaleNotes="(element as NoteElement).scaleNotes"
+                          :pageSetup="score.pageSetup"
+                        />
+                      </div>
                       <SyllableNeumeBox
                         class="syllable-box"
                         :note="element"
@@ -1240,6 +1246,7 @@ import TempoNeumeBox from '@/components/NeumeBoxTempo.vue';
 import NeumeSelector from '@/components/NeumeSelector.vue';
 import PageSetupDialog from '@/components/PageSetupDialog.vue';
 import PlaybackSettingsDialog from '@/components/PlaybackSettingsDialog.vue';
+import ScaleNotesStaff from '@/components/ScaleNotesStaff.vue';
 import SearchText from '@/components/SearchText.vue';
 import SyllablePositioningDialog from '@/components/SyllablePositioningDialog.vue';
 import TextBox from '@/components/TextBox.vue';
@@ -1390,6 +1397,7 @@ interface Vue3TabsChromeComponent {
     FileMenuBar,
     Vue3TabsChrome,
     SearchText,
+    ScaleNotesStaff,
   },
 })
 export default class Editor extends Vue {
@@ -7633,6 +7641,15 @@ export default class Editor extends Vue {
 
   .print-only {
     display: block;
+  }
+
+  .scale-notes-staff {
+    position: absolute;
+    top: calc(-30px * var(--zoom, 1)); /* Adjust the top position as needed */
+    left: 0;
+    width: 100%;
+    height: 30px; /* Adjust the height as needed */
+    pointer-events: none; /* Prevent the staff from interfering with clicks */
   }
 }
 </style>
