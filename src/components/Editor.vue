@@ -1297,11 +1297,11 @@ import { Header } from '@/models/Header';
 import { modeKeyTemplates } from '@/models/ModeKeys';
 import {
   areVocalExpressionsEquivalent,
+  getSecondaryNeume,
   measureBarAboveToLeft,
   onlyTakesBottomKlasma,
   onlyTakesTopGorgon,
   onlyTakesTopKlasma,
-  takesSecondaryNeumes,
 } from '@/models/NeumeReplacements';
 import {
   Accidental,
@@ -2590,7 +2590,7 @@ export default class Editor extends Vue {
 
     element.quantitativeNeume = quantitativeNeume;
     // Special case for neumes with secondary gorgon
-    if (takesSecondaryNeumes(quantitativeNeume)) {
+    if (getSecondaryNeume(quantitativeNeume) != null) {
       element.secondaryGorgonNeume = secondaryGorgonNeume;
     }
 
