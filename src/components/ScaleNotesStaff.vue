@@ -14,14 +14,28 @@
       />
 
       <!-- Notes -->
-      <template v-for="(noteAtomNode, index) in noteAtomNodes" :key="`note-${index}`">
-        <g :transform="`translate(${noteX(index)}, ${noteY(noteAtomNode.physicalNote)})`">
-          <circle
-            :r="noteRadius"
+      <template
+        v-for="(noteAtomNode, index) in noteAtomNodes"
+        :key="`note-${index}`"
+      >
+        <g
+          :transform="`translate(${noteX(index)}, ${noteY(noteAtomNode.physicalNote)})`"
+        >
+          <circle :r="noteRadius" fill="black" />
+          <path
+            v-if="noteDur(noteAtomNode.duration).stem"
+            :d="noteDur(noteAtomNode.duration).stem"
+            stroke="black"
+            stroke-width="1"
+            fill="none"
+          />
+          <path
+            v-if="noteDur(noteAtomNode.duration).flag"
+            :d="noteDur(noteAtomNode.duration).flag"
+            stroke="black"
+            stroke-width="1"
             fill="black"
           />
-          <path v-if="noteDur(noteAtomNode.duration).stem" :d="noteDur(noteAtomNode.duration).stem" stroke="black" stroke-width="1" fill="none"/>
-          <path v-if="noteDur(noteAtomNode.duration).flag" :d="noteDur(noteAtomNode.duration).flag" stroke="black" stroke-width="1" fill="black"/>
         </g>
       </template>
     </svg>
@@ -44,7 +58,7 @@ export default class ScaleNotesStaff extends Vue {
   noteRadius = 3;
   lineSpacing = 4;
   width = 80; // Default width, will be updated dynamically
-  height = this.lineSpacing*5 + 20; // Fixed height for the staff
+  height = this.lineSpacing * 5 + 20; // Fixed height for the staff
 
   mounted() {
     this.updateWidth();
@@ -71,10 +85,9 @@ export default class ScaleNotesStaff extends Vue {
     return this.lineSpacing * line;
   }
 
-
   positionY(index: number) {
     // Calculate the Y position of a note: 6 is the middle line, measured from the top
-    return this.lineSpacing * index * .5;
+    return this.lineSpacing * index * 0.5;
   }
 
   noteX(index: number) {

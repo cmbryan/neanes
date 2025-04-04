@@ -2101,10 +2101,7 @@ export class LayoutService {
           getScaleNoteFromValue(currentNoteVirtual + x),
         );
 
-        AnalysisService.analyze(
-          elements,
-          pageSetup.chrysanthineAccidentals,
-        );
+        AnalysisService.analyze(elements, pageSetup.chrysanthineAccidentals);
 
         // Handle fthora carries
         if (

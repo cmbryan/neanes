@@ -241,7 +241,9 @@
                       ></div>
                       <div class="scale-notes-staff">
                         <ScaleNotesStaff
-                          :noteAtomNodes="(element as NoteElement).noteAtomNodes"
+                          :noteAtomNodes="
+                            (element as NoteElement).noteAtomNodes
+                          "
                           :pageSetup="score.pageSetup"
                         />
                       </div>

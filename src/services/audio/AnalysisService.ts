@@ -196,10 +196,18 @@ export class AnalysisService {
       case QuantitativeNeume.OligonPlusKentemataPlusHypsiliLeft:
       case QuantitativeNeume.OligonPlusKentemataPlusHypsiliRight:
       case QuantitativeNeume.OligonPlusKentemata:
-        this.handleKentemataCombo(noteElement, noteElement.noteAtomNodes, workspace);
+        this.handleKentemataCombo(
+          noteElement,
+          noteElement.noteAtomNodes,
+          workspace,
+        );
         break;
       case QuantitativeNeume.KentemataPlusOligon:
-        this.handleKentemataOligon(noteElement, noteElement.noteAtomNodes, workspace);
+        this.handleKentemataOligon(
+          noteElement,
+          noteElement.noteAtomNodes,
+          workspace,
+        );
         break;
       case QuantitativeNeume.Hyporoe:
       case QuantitativeNeume.PetastiPlusHyporoe:
@@ -208,11 +216,19 @@ export class AnalysisService {
         break;
       case QuantitativeNeume.DoubleApostrophos:
       case QuantitativeNeume.IsonPlusApostrophos:
-        this.handleApostrophosCombo(noteElement, noteElement.noteAtomNodes, workspace);
+        this.handleApostrophosCombo(
+          noteElement,
+          noteElement.noteAtomNodes,
+          workspace,
+        );
         break;
       case QuantitativeNeume.RunningElaphron:
       case QuantitativeNeume.PetastiPlusRunningElaphron:
-        this.handleRunningElaphron(noteElement, noteElement.noteAtomNodes, workspace);
+        this.handleRunningElaphron(
+          noteElement,
+          noteElement.noteAtomNodes,
+          workspace,
+        );
         break;
       case QuantitativeNeume.OligonPlusRunningElaphronPlusKentemata:
         this.handleRunningElaphronKentemata(
@@ -222,7 +238,11 @@ export class AnalysisService {
         );
         break;
       case QuantitativeNeume.OligonPlusHyporoePlusKentemata:
-        this.handleHyporoeKentemata(noteElement, noteElement.noteAtomNodes, workspace);
+        this.handleHyporoeKentemata(
+          noteElement,
+          noteElement.noteAtomNodes,
+          workspace,
+        );
         break;
       case QuantitativeNeume.Breath:
       case QuantitativeNeume.Cross:
