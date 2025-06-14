@@ -1,6 +1,15 @@
 <template>
   <div class="scale-notes-staff-container">
     <svg :width="width" :height="height">
+      <!-- Treble Clef (if first note) -->
+      <image
+        v-if="isFirstLineElement"
+        :x="0"
+        :y="lineY(1) - 14"
+        height="46"
+        href="@/assets/icons/western_notation/treble_clef.svg"
+      />
+
       <!-- Staff Lines -->
       <line
         v-for="i in 5"
@@ -22,20 +31,6 @@
           :transform="`translate(${noteX(index)}, ${noteY(noteAtomNode.physicalNote)})`"
         >
           <circle :r="noteRadius" fill="black" />
-          <path
-            v-if="noteDur(noteAtomNode.duration).stem"
-            :d="noteDur(noteAtomNode.duration).stem"
-            stroke="black"
-            stroke-width="1"
-            fill="none"
-          />
-          <path
-            v-if="noteDur(noteAtomNode.duration).flag"
-            :d="noteDur(noteAtomNode.duration).flag"
-            stroke="black"
-            stroke-width="1"
-            fill="black"
-          />
         </g>
       </template>
     </svg>
@@ -52,6 +47,7 @@ import { NoteAtomNode } from '@/services/audio/AnalysisService';
 @Component
 export default class ScaleNotesStaff extends Vue {
   @Prop({ required: true }) noteAtomNodes!: NoteAtomNode[];
+  @Prop({ required: true }) isFirstLineElement!: boolean;
   @Prop({ required: true }) pageSetup!: PageSetup;
 
   lineWidth = 1;

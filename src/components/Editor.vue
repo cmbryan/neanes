@@ -200,7 +200,7 @@
                 :ref="`line-${lineIndex}`"
               >
                 <div
-                  v-for="element in line.elements"
+                  v-for="(element, indexInLine) in line.elements"
                   :key="`element-${element.id}-${element.keyHelper}`"
                   class="element-box"
                   :style="getElementStyle(element)"
@@ -245,6 +245,7 @@
                             (element as NoteElement).noteAtomNodes
                           "
                           :pageSetup="score.pageSetup"
+                          :isFirstLineElement="indexInLine === 0"
                         />
                       </div>
                       <SyllableNeumeBox
