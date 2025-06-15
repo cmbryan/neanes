@@ -1,13 +1,13 @@
 <template>
-  <div class="scale-notes-staff-container">
-    <svg :width="width" :height="height">
+  <div class="scale-notes-staff-container" :style="{ height: `${height-25}px` }">
+    <svg :width="width">
       <!-- Treble Clef (if first note) -->
       <image
         v-if="isFirstLineElement"
         :x="0"
-        :y="lineY(1) - 14"
-        height="46"
-        href="@/assets/icons/western_notation/treble_clef.svg"
+        :y="lineY(1) - 6"
+        height="30"
+        href="@/assets/icons/western_notation/GClef.svg"
       />
 
       <!-- Staff Lines -->
@@ -78,7 +78,7 @@ export default class ScaleNotesStaff extends Vue {
 
   lineY(line: number) {
     // Calculate the Y position of a staff line
-    return this.lineSpacing * line;
+    return this.lineSpacing * line + 3;
   }
 
   noteX(index: number) {
@@ -88,7 +88,7 @@ export default class ScaleNotesStaff extends Vue {
 
   noteY(note: ScaleNote) {
     // Calculate the Y position of a note based on its scale degree
-    return this.lineSpacing * getScaleNoteValue(note) * -0.5 + 22.3;
+    return this.lineSpacing * getScaleNoteValue(note) * -0.5 + 25.1;
   }
 
 }
